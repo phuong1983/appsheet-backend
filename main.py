@@ -4,6 +4,8 @@ from google.oauth2.service_account import Credentials
 from datetime import datetime
 import uuid
 import time
+import os
+import json
 
 def append_with_retry(rows, max_retries=3):
     for attempt in range(max_retries):
@@ -26,11 +28,15 @@ SCOPES = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive"
 ]
-                                            # SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
+creds_dict = json.loads(os.environ["GOOGLE_CREDENTIALS"])
 
 # 👉 load credentials
-creds = Credentials.from_service_account_file(
-    "appsheet-webhook-b99538089c56.json",  # đổi tên nếu file bạn khác
+                                                # creds = Credentials.from_service_account_file(
+                                                #     "appsheet-webhook-b99538089c56.json",  # đổi tên nếu file bạn khác
+                                                #     scopes=SCOPES
+                                                # )
+creds = Credentials.from_service_account_info(
+    creds_dict,
     scopes=SCOPES
 )
 
