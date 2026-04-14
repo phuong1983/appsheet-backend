@@ -7,6 +7,11 @@ import time
 import os
 import json
 
+SECRET_KEY = os.environ.get("SECRET_KEY")
+if not SECRET_KEY:
+    raise ValueError("❌ SECRET_KEY not set")
+# SECRET_KEY = "my_super_secret_123"
+
 def append_with_retry(rows, max_retries=3):
     for attempt in range(max_retries):
         try:
@@ -20,8 +25,6 @@ def append_with_retry(rows, max_retries=3):
     print("🚨 FAILED after retries")
 
 app = FastAPI()
-
-SECRET_KEY = "my_super_secret_123"
 
 # 🔐 scope
 SCOPES = [
